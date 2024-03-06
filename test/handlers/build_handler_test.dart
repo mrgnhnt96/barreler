@@ -73,12 +73,10 @@ void main() {
 
         final barreler = barrelers.first;
         final expected = Barrel(
-          name: 'lib',
           baseSettings: settings,
           dirSettings: dirSettings,
-          dirPath: 'lib',
-          barrelFile: 'lib/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         expect(barreler, expected);
@@ -104,20 +102,16 @@ void main() {
 
         final expected = [
           Barrel(
-            name: 'models',
             baseSettings: settings,
             dirSettings: dirSettings.changePath('lib/models'),
-            dirPath: 'lib/models',
-            barrelFile: 'lib/models/index.dart',
             fs: fs,
+            logger: mockLogger,
           ),
           Barrel(
-            name: 'src',
             baseSettings: settings,
             dirSettings: dirSettings.changePath('lib/src'),
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           ),
         ];
 
@@ -144,20 +138,16 @@ void main() {
 
         final expected = [
           Barrel(
-            name: 'models',
             baseSettings: settings,
             dirSettings: dirSettings.changePath('lib/src/models'),
-            dirPath: 'lib/src/models',
-            barrelFile: 'lib/src/models/index.dart',
             fs: fs,
+            logger: mockLogger,
           ),
           Barrel(
-            name: 'src',
             baseSettings: settings,
             dirSettings: dirSettings.changePath('lib/src'),
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           ),
         ];
 
@@ -270,14 +260,12 @@ void main() {
 
         final barrels = [
           Barrel(
-            name: 'src',
             baseSettings: Settings(
               dirs: [dirSettings],
             ),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           ),
         ];
 
@@ -307,14 +295,12 @@ void main() {
 
         final barrels = [
           Barrel(
-            name: 'src',
             baseSettings: Settings(
               dirs: [dirSettings],
             ),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           ),
         ];
 
@@ -346,15 +332,13 @@ void main() {
 
         final barrels = [
           Barrel(
-            name: 'src',
             baseSettings: Settings(
               dirs: [dirSettings],
               defaultSettings: DefaultSettings(disclaimer: 'blah'),
             ),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           ),
         ];
 
@@ -387,14 +371,12 @@ void main() {
         );
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(
             dirs: [dirSettings],
           ),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final seed = await barrel.create(allowChange: true);

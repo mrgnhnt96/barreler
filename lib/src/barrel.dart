@@ -6,52 +6,47 @@ import 'package:dart_style/dart_style.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file/file.dart';
 import 'package:glob/glob.dart';
-import 'package:path/path.dart' as path;
+import 'package:mason_logger/mason_logger.dart';
 
 part 'barrel.g.dart';
 
 class Barrel extends Equatable {
   Barrel({
-    required this.name,
     required this.baseSettings,
     required this.dirSettings,
-    required this.dirPath,
-    required this.barrelFile,
     required this.fs,
+    required this.logger,
   });
 
-  final String name;
   final Settings baseSettings;
   final DirectorySettings dirSettings;
-  final String dirPath;
-  final String barrelFile;
   @ignore
   final FileSystem fs;
+  @ignore
+  final Logger logger;
 
   factory Barrel.from(
-    Settings package,
-    DirectorySettings index,
+    Settings baseSettings,
+    DirectorySettings dirSettings,
     FileSystem fs,
+    Logger logger,
   ) {
-    final indexPath = path.join(
-      index.dirPath,
-      '${index.resolveFileName(package.defaultSettings.fileName)}.dart',
-    );
-
     return Barrel(
-      name: path.basename(index.dirPath),
-      baseSettings: package,
-      dirSettings: index,
-      dirPath: index.dirPath,
-      barrelFile: indexPath,
+      baseSettings: baseSettings,
+      dirSettings: dirSettings,
       fs: fs,
+      logger: logger,
     );
   }
 
-  /// Find dart files without index file
+  String get barrelFile =>
+      dirSettings.barrelFile(baseSettings.defaultSettings.fileName);
+
+  /// Find dart files without settings file
   Iterable<String> findFiles() sync* {
-    final files =
-        fs.directory(dirPath).listSync(recursive: true, followLinks: false);
+    final files = fs
+        .directory(dirSettings.dirPath)
+        .listSync(recursive: true, followLinks: false);
 
     for (final file in files) {
       if (file is! File) continue;
@@ -72,26 +67,34 @@ class Barrel extends Equatable {
     ];
     final exclude = [...baseSettings.exclude, ...dirSettings.exclude];
 
-    for (final file in files) {
-      final isIncluded =
-          include.isEmpty || include.any((f) => Glob(f).matches(file));
-      if (!isIncluded) continue;
+    logger.detail('Include: $include');
+    logger.detail('Exclude: $exclude');
 
-      final isExcluded = exclude.any((f) => Glob(f).matches(file));
-      if (isExcluded) continue;
+    for (final file in files) {
+      final isIncluded = include.isEmpty ||
+          include.any((f) => Glob(f).matches(file) || file.endsWith(f));
+      if (!isIncluded) {
+        continue;
+      }
+
+      final isExcluded =
+          exclude.any((f) => Glob(f).matches(file) || file.endsWith(f));
+      if (isExcluded) {
+        continue;
+      }
 
       yield file;
     }
   }
 
-  /// Convert dart [files] in index content lines
+  /// Convert dart [files] in settings content lines
   Iterable<String> exports(Iterable<String> files) sync* {
     final mappedExports = {
       for (final export in dirSettings.include) export.export: export,
     };
 
     for (final file in files) {
-      final filePath = file.relativeTo(dirPath);
+      final filePath = file.relativeTo(dirSettings.dirPath);
 
       final exportSettings = mappedExports[filePath] ?? mappedExports[file];
 
@@ -104,7 +107,7 @@ class Barrel extends Equatable {
     }
   }
 
-  /// Generate a index file content
+  /// Generate a settings file content
   Iterable<String>? content({
     required Iterable<String> disclaimer,
     required Iterable<String> comments,
@@ -134,7 +137,7 @@ class Barrel extends Equatable {
     ];
   }
 
-  /// Create a index file content
+  /// Create a settings file content
   Future<({bool contentMatches})?> create({required bool allowChange}) async {
     final formatter = DartFormatter(
       lineEnding: baseSettings.lineBreak,

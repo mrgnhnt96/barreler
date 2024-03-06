@@ -88,7 +88,7 @@ void main() {
           dirPath: 'lib',
         );
 
-        expect(settings.resolveFileName('index.dart'), 'index.dart');
+        expect(settings.name('index.dart'), 'index.dart');
       });
 
       test('returns custom file name', () {
@@ -97,7 +97,7 @@ void main() {
           fileName: 'foo.dart',
         );
 
-        expect(settings.resolveFileName('index.dart'), 'foo.dart');
+        expect(settings.name('index.dart'), 'foo.dart');
       });
 
       test('returns directory name', () {
@@ -105,7 +105,7 @@ void main() {
           dirPath: 'lib/foo',
         );
 
-        expect(settings.resolveFileName(null), 'foo');
+        expect(settings.name(null), 'foo');
       });
     });
 

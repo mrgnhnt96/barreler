@@ -8,10 +8,7 @@ part of 'barrel.dart';
 
 extension _$BarrelAutoequal on Barrel {
   List<Object?> get _$props => [
-        name,
         baseSettings,
         dirSettings,
-        dirPath,
-        barrelFile,
       ];
 }

@@ -49,15 +49,16 @@ void main() {
           ],
         );
 
-        final dirSettings = DirectorySettings(dirPath: 'lib/src');
+        final dirSettings = DirectorySettings(
+          dirPath: 'lib/src',
+          fileName: 'index',
+        );
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(dirs: [dirSettings]),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final files = barrel.findFiles().toList();
@@ -71,19 +72,16 @@ void main() {
           dirs: ['lib/src', 'lib/src/foo'],
           files: [
             'lib/src/bar.dart',
-            'lib/src/index.dart',
           ],
         );
 
         final dirSettings = DirectorySettings(dirPath: 'lib/src');
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(dirs: [dirSettings]),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final files = barrel.findFiles().toList();
@@ -98,19 +96,16 @@ void main() {
           files: [
             'lib/src/bar.ts',
             'lib/src/baz.dart',
-            'lib/src/index.dart',
           ],
         );
 
         final dirSettings = DirectorySettings(dirPath: 'lib/src');
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(dirs: [dirSettings]),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final files = barrel.findFiles().toList();
@@ -125,17 +120,42 @@ void main() {
         final dirSettings = DirectorySettings(dirPath: 'lib/src');
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(dirs: [dirSettings]),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final files = barrel.filterFiles([
           'lib/src/foo.dart',
           'lib/src/bar.dart',
+        ]).toList();
+
+        expect(files, hasLength(2));
+      });
+
+      test('includes files that match the end of the pattern', () {
+        final dirSettings = DirectorySettings(
+          dirPath: 'packages/application/lib',
+          include: [
+            ExportSettings(export: '**_bloc.dart'),
+            ExportSettings(
+              export: 'setup/setup.dart',
+              show: ['setup'],
+            ),
+          ],
+        );
+
+        final barrel = Barrel(
+          baseSettings: Settings(dirs: [dirSettings]),
+          dirSettings: dirSettings,
+          fs: fs,
+          logger: mockLogger,
+        );
+
+        final files = barrel.filterFiles([
+          'packages/application/lib/blocs/foo_bloc.dart',
+          'packages/application/lib/setup/setup.dart',
         ]).toList();
 
         expect(files, hasLength(2));
@@ -148,15 +168,13 @@ void main() {
           );
 
           final barrel = Barrel(
-            name: 'src',
             baseSettings: Settings(
               dirs: [dirSettings],
               exclude: ['**/bar.dart'],
             ),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           );
 
           final files = barrel.filterFiles([
@@ -175,12 +193,10 @@ void main() {
           );
 
           final barrel = Barrel(
-            name: 'src',
             baseSettings: Settings(dirs: [dirSettings]),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           );
 
           final files = barrel.filterFiles([
@@ -200,15 +216,13 @@ void main() {
           );
 
           final barrel = Barrel(
-            name: 'src',
             baseSettings: Settings(
               dirs: [dirSettings],
               include: ['**/foo.dart'],
             ),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           );
 
           final files = barrel.filterFiles([
@@ -229,12 +243,10 @@ void main() {
           );
 
           final barrel = Barrel(
-            name: 'src',
             baseSettings: Settings(dirs: [dirSettings]),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           );
 
           final files = barrel.filterFiles([
@@ -255,12 +267,10 @@ void main() {
         );
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(dirs: [dirSettings]),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final exports = barrel.exports([
@@ -284,12 +294,10 @@ void main() {
           );
 
           final barrel = Barrel(
-            name: 'src',
             baseSettings: Settings(dirs: [dirSettings]),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           );
 
           final exports = barrel.exports([
@@ -312,12 +320,10 @@ void main() {
           );
 
           final barrel = Barrel(
-            name: 'src',
             baseSettings: Settings(dirs: [dirSettings]),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           );
 
           final exports = barrel.exports([
@@ -342,12 +348,10 @@ void main() {
           );
 
           final barrel = Barrel(
-            name: 'src',
             baseSettings: Settings(dirs: [dirSettings]),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           );
 
           final exports = barrel.exports([
@@ -370,12 +374,10 @@ void main() {
           );
 
           final barrel = Barrel(
-            name: 'src',
             baseSettings: Settings(dirs: [dirSettings]),
             dirSettings: dirSettings,
-            dirPath: 'lib/src',
-            barrelFile: 'lib/src/index.dart',
             fs: fs,
+            logger: mockLogger,
           );
 
           final exports = barrel.exports([
@@ -395,12 +397,10 @@ void main() {
         );
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(dirs: [dirSettings]),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final disclaimer = 'disclaimer';
@@ -433,12 +433,10 @@ void main() {
         );
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(dirs: [dirSettings]),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final content = barrel.content(
@@ -464,15 +462,14 @@ void main() {
 
         final dirSettings = DirectorySettings(
           dirPath: 'lib/src',
+          fileName: 'index',
         );
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(dirs: [dirSettings]),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final result = await barrel.create(allowChange: true);
@@ -497,12 +494,10 @@ void main() {
         );
 
         final barrel = Barrel(
-          name: 'src',
           baseSettings: Settings(dirs: [dirSettings]),
           dirSettings: dirSettings,
-          dirPath: 'lib/src',
-          barrelFile: 'lib/src/index.dart',
           fs: fs,
+          logger: mockLogger,
         );
 
         final result = await barrel.create(allowChange: false);

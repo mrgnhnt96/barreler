@@ -40,6 +40,18 @@ class DirectorySettings extends Equatable {
   @JsonKey(name: 'name')
   final String? fileName;
 
+  /// Gets the name of the barrel file, [fileName] if provided,
+  /// otherwise the name of the directory
+  String name(String? defaultName) =>
+      fileName ?? defaultName ?? path.basename(dirPath);
+
+  /// Gets the path of the barrel file
+  String barrelFile(String? defaultName) {
+    final name = this.name(defaultName).replaceAll('.dart', '');
+
+    return path.join(dirPath, '$name.dart');
+  }
+
   /// Adds the generated code disclaimer
   final bool disclaimer;
 
@@ -57,17 +69,6 @@ class DirectorySettings extends Equatable {
   /// Black filters
   @JsonKey(readValue: stringOrList)
   final List<String> exclude;
-
-  String resolveFileName(String? defaultFileName) {
-    final fileName = this.fileName;
-    if (fileName != null) return fileName;
-
-    if (defaultFileName != null) return defaultFileName;
-
-    final dirName = path.basename(dirPath);
-
-    return dirName;
-  }
 
   DirectorySettings changePath(String newDir) {
     return DirectorySettings._(

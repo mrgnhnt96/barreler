@@ -6,6 +6,7 @@ import 'package:checked_yaml/checked_yaml.dart';
 import 'package:file/file.dart';
 import 'package:glob/glob.dart';
 import 'package:mason_logger/mason_logger.dart';
+import 'package:path/path.dart';
 
 class BuildHandler {
   const BuildHandler({
@@ -30,7 +31,7 @@ class BuildHandler {
           await Glob(dir.dirPath).listFileSystemSync(fs, followLinks: false);
 
       if (matches.length == 1) {
-        barrels.add(Barrel.from(settings, dir, fs));
+        barrels.add(Barrel.from(settings, dir, fs, logger));
         continue;
       }
 
@@ -41,12 +42,13 @@ class BuildHandler {
         final updated =
             dir.changePath(entity.path.relativeTo(fs.currentDirectory.path));
 
-        barrels.add(Barrel.from(settings, updated, fs));
+        barrels.add(Barrel.from(settings, updated, fs, logger));
       }
     }
 
     // longest path first, incase nested directories barrel files are to be exported later
-    barrels.sort((a, b) => b.dirPath.length.compareTo(a.dirPath.length));
+    barrels.sort((a, b) =>
+        b.dirSettings.dirPath.length.compareTo(a.dirSettings.dirPath.length));
 
     return barrels;
   }
@@ -87,7 +89,7 @@ class BuildHandler {
 
     for (final barrel in barrels) {
       final path = barrel.dirSettings.dirPath;
-      final name = barrel.dirSettings.fileName ?? barrel.name;
+      final name = basename(barrel.barrelFile);
       final barrelString = '${blue.wrap(name)} ${darkGray.wrap('— in $path')}';
       final done = logger.progress(
         'Creating $barrelString',
