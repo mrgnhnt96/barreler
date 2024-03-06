@@ -47,3 +47,14 @@ DirectorySettings _$DirectorySettingsFromJson(Map json) => $checkedCreate(
       },
       fieldKeyMap: const {'dirPath': 'path', 'fileName': 'name'},
     );
+
+Map<String, dynamic> _$DirectorySettingsToJson(DirectorySettings instance) =>
+    <String, dynamic>{
+      'path': instance.dirPath,
+      'name': instance.fileName,
+      'disclaimer': instance.disclaimer,
+      'comments': instance.comments,
+      'exports': instance.exports.map((e) => e.toJson()).toList(),
+      'include': instance.include.map((e) => e.toJson()).toList(),
+      'exclude': instance.exclude,
+    };

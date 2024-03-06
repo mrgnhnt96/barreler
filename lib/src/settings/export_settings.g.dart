@@ -42,3 +42,10 @@ ExportSettings _$ExportSettingsFromJson(Map json) => $checkedCreate(
         return val;
       },
     );
+
+Map<String, dynamic> _$ExportSettingsToJson(ExportSettings instance) =>
+    <String, dynamic>{
+      'export': instance.export,
+      'show': instance.show,
+      'hide': instance.hide,
+    };

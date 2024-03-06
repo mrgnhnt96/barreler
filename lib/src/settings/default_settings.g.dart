@@ -32,3 +32,10 @@ DefaultSettings _$DefaultSettingsFromJson(Map json) => $checkedCreate(
       },
       fieldKeyMap: const {'fileName': 'file_name'},
     );
+
+Map<String, dynamic> _$DefaultSettingsToJson(DefaultSettings instance) =>
+    <String, dynamic>{
+      'file_name': instance.fileName,
+      'comments': instance.comments,
+      'disclaimer': instance.disclaimer,
+    };

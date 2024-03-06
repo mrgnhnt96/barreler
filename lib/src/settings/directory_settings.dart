@@ -28,6 +28,10 @@ class DirectorySettings extends Equatable {
     required this.exclude,
   });
 
+  // ignore: strict_raw_type
+  factory DirectorySettings.fromJson(Map data) =>
+      _$DirectorySettingsFromJson(data);
+
   /// Folder path to create a index file
   @JsonKey(name: 'path')
   final String dirPath;
@@ -77,9 +81,7 @@ class DirectorySettings extends Equatable {
     );
   }
 
-  // ignore: strict_raw_type
-  factory DirectorySettings.fromJson(Map data) =>
-      _$DirectorySettingsFromJson(data);
+  Map<String, dynamic> toJson() => _$DirectorySettingsToJson(this);
 
   @override
   List<Object?> get props => _$props;

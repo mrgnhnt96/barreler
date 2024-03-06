@@ -16,17 +16,19 @@ class Settings extends Equatable {
     this.lineLength = 80,
   });
 
+  // ignore: strict_raw_type
+  factory Settings.fromJson(Map map) => _$SettingsFromJson(map);
+
   final String lineBreak;
   final int lineLength;
   final List<String> include;
   final List<String> exclude;
-  @JsonKey(defaultValue: const [])
-  final List<DirectorySettings> dirs;
   @JsonKey(name: 'defaults')
   final DefaultSettings defaultSettings;
+  @JsonKey(defaultValue: const [])
+  final List<DirectorySettings> dirs;
 
-  // ignore: strict_raw_type
-  factory Settings.fromJson(Map map) => _$SettingsFromJson(map);
+  Map<String, dynamic> toJson() => _$SettingsToJson(this);
 
   @override
   List<Object?> get props => _$props;

@@ -18,6 +18,8 @@ class DefaultSettings extends Equatable {
   final String? comments;
   final String disclaimer;
 
+  Map<String, dynamic> toJson() => _$DefaultSettingsToJson(this);
+
   @override
   List<Object?> get props => _$props;
 }

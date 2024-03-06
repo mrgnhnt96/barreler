@@ -12,6 +12,9 @@ class ExportSettings extends Equatable {
     this.hide = const [],
   });
 
+  // ignore: strict_raw_type
+  factory ExportSettings.fromJson(Map data) => _$ExportSettingsFromJson(data);
+
   /// Package name without dart extension
   final String export;
 
@@ -22,9 +25,6 @@ class ExportSettings extends Equatable {
   /// Class to method to hide
   @JsonKey(readValue: stringOrList)
   final List<String> hide;
-
-  // ignore: strict_raw_type
-  factory ExportSettings.fromJson(Map data) => _$ExportSettingsFromJson(data);
 
   ExportSettings updatePath(String file) {
     return ExportSettings(
@@ -42,6 +42,8 @@ class ExportSettings extends Equatable {
       ';',
     ].join('');
   }
+
+  Map<String, dynamic> toJson() => _$ExportSettingsToJson(this);
 
   @override
   List<Object?> get props => _$props;

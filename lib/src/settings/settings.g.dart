@@ -12,8 +12,8 @@ extension _$SettingsAutoequal on Settings {
         lineLength,
         include,
         exclude,
-        dirs,
         defaultSettings,
+        dirs,
       ];
 }
 
@@ -60,3 +60,12 @@ Settings _$SettingsFromJson(Map json) => $checkedCreate(
         'lineLength': 'line_length'
       },
     );
+
+Map<String, dynamic> _$SettingsToJson(Settings instance) => <String, dynamic>{
+      'line_break': instance.lineBreak,
+      'line_length': instance.lineLength,
+      'include': instance.include,
+      'exclude': instance.exclude,
+      'defaults': instance.defaultSettings.toJson(),
+      'dirs': instance.dirs.map((e) => e.toJson()).toList(),
+    };
