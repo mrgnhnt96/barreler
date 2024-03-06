@@ -1,0 +1,6 @@
+exclude:
+  - '**.g.dart'
+
+dirs:
+  - path: lib
+    name: barreler

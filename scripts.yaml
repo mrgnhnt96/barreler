@@ -1,6 +1,12 @@
 (variables):
   delete: --delete-conflicting-outputs
 
+barrel:
+  (command):
+    - "{$install}"
+    - "{$barrel:_only}"
+  _only: barreler build
+
 install:
   (aliases): i
   (command): dart pub global activate --source path . --overwrite
@@ -29,6 +35,7 @@ analyze: dart analyze .
 prep:
   (command):
     - "{$install}"
+    - "{$barrel:_only}"
     - "{$format} --set-exit-if-changed"
     - "{$analyze} --fatal-infos --fatal-warnings"
     - "{$prep:_build}"
