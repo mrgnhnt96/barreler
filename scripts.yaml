@@ -32,6 +32,16 @@ pana: dart pub run pana
 format: dart format .
 analyze: dart analyze .
 
+create-example:
+  (description): Creates a new config for barreler and adds it to the README
+  (command):
+    - "{$create-example:_create}"
+    - "{$create-example:_add-to-readme}"
+    - "{$create-example:_delete}"
+  _create: dart run scripts/create_barreler_example/lib/main.dart
+  _delete: rm -rf barreler-example.yaml
+  _add-to-readme: sh scripts/add-example-to-readme.sh
+
 prep:
   (command):
     - "{$install}"
@@ -39,6 +49,7 @@ prep:
     - "{$format} --set-exit-if-changed"
     - "{$analyze} --fatal-infos --fatal-warnings"
     - "{$prep:_build}"
+    - "{$create-example}"
     - (+) {$prep:pubspec}
     - sip pub get -r
   _build:
