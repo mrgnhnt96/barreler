@@ -198,7 +198,7 @@ void main() {
 
         final (path, exitCode) = await handler.getConfigPath();
 
-        expect(path, FindSettings.defaultPath);
+        expect(path, endsWith(FindSettings.defaultPath));
         expect(exitCode, isNull);
       });
 

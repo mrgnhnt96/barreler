@@ -5,8 +5,17 @@ import 'package:test/test.dart';
 void main() {
   group('$DirectorySettings', () {
     group('serializes', () {
-      test('when empty', () {
-        final settings = DirectorySettings.fromJson({});
+      test('when empty throws an error', () {
+        expect(
+          () => DirectorySettings.fromJson({}),
+          throwsA(isA<Exception>()),
+        );
+      });
+
+      test('successfully parses when path is only included', () {
+        final settings = DirectorySettings.fromJson({
+          'path': 'lib',
+        });
 
         expect(settings, isA<DirectorySettings>());
       });
