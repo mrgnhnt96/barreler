@@ -1,6 +1,6 @@
 name: barreler
 description: A library for generating barrel files.
-version: 1.0.0+1
+version: 1.0.1
 homepage: https://github.com/mrgnhnt96/barreler
 topics:
   - barrel
