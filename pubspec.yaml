@@ -1,6 +1,6 @@
 name: barreler
 description: A library for generating barrel files.
-version: 1.0.0
+version: 1.0.0+1
 homepage: https://github.com/mrgnhnt96/barreler
 topics:
   - barrel
@@ -12,18 +12,18 @@ environment:
   sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
-  args: ^2.4.2
-  autoequal: ^0.9.1
-  checked_yaml: ^2.0.1
-  dart_style: ^2.2.3
-  equatable: ^2.0.5
-  file: ^7.0.0
-  glob: ^2.1.2
-  json2yaml: ^3.0.1
-  json_annotation: ^4.8.1
-  mason_logger: ^0.2.12
-  path: ^1.8.1
-  yaml: ^3.1.1
+  args: ">=2.0.0 <3.0.0"
+  autoequal: ">=0.0.1 <1.0.0"
+  checked_yaml: ">=2.0.0 <3.0.0"
+  dart_style: ">=2.0.0 <3.0.0"
+  equatable: ">=2.0.0 <3.0.0"
+  file: ">=6.1.4 <8.0.0"
+  glob: ">=2.0.0 <3.0.0"
+  json2yaml: ">=3.0.0 <4.0.0"
+  json_annotation: ">=4.0.0 <5.0.0"
+  mason_logger: ">=0.0.1 <1.0.0"
+  path: ">=1.0.0 <2.0.0"
+  yaml: ">=3.0.0 <4.0.0"
 
 dev_dependencies:
   autoequal_gen: ^0.9.1

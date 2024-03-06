@@ -24,3 +24,4 @@ build/
 doc/api/
 .lh
 barreler-example.yaml
+**/.optimized_test.dart

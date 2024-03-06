@@ -17,9 +17,6 @@ To create an example of the `barreler.yaml` file, run `barreler example`.
 
 View the [config example](#config-example) for a full example of the `barreler.yaml` file.
 
-```yaml
-dirs:
-
 ```bash
 barreler build
 ```
