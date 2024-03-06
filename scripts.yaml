@@ -44,12 +44,12 @@ create-example:
 
 prep:
   (command):
-    - "{$install}"
-    - "{$barrel:_only}"
     - "{$format} --set-exit-if-changed"
     - "{$analyze} --fatal-infos --fatal-warnings"
     - "{$prep:_build}"
     - "{$create-example}"
+    - "{$install}"
+    - "{$barrel:_only}"
     - (+) {$prep:pubspec}
     - sip pub get -r
   _build:

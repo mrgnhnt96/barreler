@@ -36,6 +36,10 @@ include:
   - "**/*.dart"
 exclude:
   - "**/*.g.dart"
+defaults:
+  file_name: # defaults to directory name
+  comments:
+  disclaimer: GENERATED CODE - DO NOT MODIFY BY HAND
 dirs:
   - path: lib
     name:
@@ -57,9 +61,5 @@ dirs:
           - C
     exclude:
       - src/numbers.dart
-defaults:
-  file_name: # defaults to directory name
-  comments:
-  disclaimer: GENERATED CODE - DO NOT MODIFY BY HAND
 ```
 <!-- END barreler-example.yaml -->
