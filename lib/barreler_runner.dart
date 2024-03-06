@@ -1,6 +1,7 @@
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:barreler/commands/build_command.dart';
+import 'package:barreler/commands/example_command.dart';
 import 'package:barreler/src/find_settings.dart';
 import 'package:barreler/src/version.dart';
 import 'package:file/file.dart';
@@ -21,6 +22,13 @@ class BarrelerRunner extends CommandRunner<int> {
         settings: FindSettings(
           fs: fs,
         ),
+      ),
+    );
+
+    addCommand(
+      ExampleCommand(
+        fileSystem: fs,
+        logger: logger,
       ),
     );
 
