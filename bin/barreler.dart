@@ -4,6 +4,7 @@ import 'package:barreler/barreler_runner.dart';
 import 'package:barreler/src/key_press_listener.dart';
 import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
+import 'package:pub_updater/pub_updater.dart';
 
 void main(List<String> rawArgs) async {
   await flushThenExit(await run(rawArgs));
@@ -34,6 +35,7 @@ Future<int> run(List<String> rawArgs) async {
     logger: logger,
     fs: fs,
     keyPressListener: KeyPressListener(logger: logger),
+    pubUpdater: PubUpdater(),
   ).run(args);
 
   logger.flush();
