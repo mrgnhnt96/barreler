@@ -44,6 +44,7 @@ create-example:
 
 prep:
   (command):
+    - sip pub get --recursive --quiet
     - "{$format} --set-exit-if-changed"
     - "{$analyze} --fatal-infos --fatal-warnings"
     - "{$prep:_build}"

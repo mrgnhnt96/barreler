@@ -21,6 +21,16 @@ View the [config example](#config-example) for a full example of the `barreler.y
 barreler build
 ```
 
+### Watch for Changes
+
+Barrel files should be updated consistently as you add or remove files from your project. To watch for changes and update the barrel files accordingly, run `barreler watch`.
+
+The `barreler watch` command will watch the directories configured in `barreler.yaml` for changes and update the barrel files. The file events that are watched are `create`, `move`, and `delete` events. The `modify` event is ignored.
+
+```bash
+barreler watch
+```
+
 ## Config Example
 
 <!-- BEGIN barreler-example.yaml -->

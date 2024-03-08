@@ -1,3 +1,10 @@
+# 1.1.0 | 3.8.2024
+
+## Features
+
+- Add `barreler watch` command to watch the directories configured in `barreler.yaml` for changes and update the barrel files accordingly
+- Add `barreler update` command to update the barreler cli package to the latest version
+
 # 1.0.1 | 3.6.2024
 
 ## Enhancements
