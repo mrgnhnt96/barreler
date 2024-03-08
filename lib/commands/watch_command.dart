@@ -1,14 +1,16 @@
 import 'package:args/command_runner.dart';
 import 'package:barreler/handlers/build_handler.dart';
 import 'package:barreler/src/find_settings.dart';
+import 'package:barreler/src/key_press_listener.dart';
 import 'package:file/file.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-class BuildCommand extends Command<int> {
-  BuildCommand({
+class WatchCommand extends Command<int> {
+  WatchCommand({
     required this.settings,
     required this.fs,
     required this.logger,
+    required this.keyPressListener,
   }) {
     argParser
       ..addOption(
@@ -16,43 +18,47 @@ class BuildCommand extends Command<int> {
         abbr: 'c',
         valueHelp: 'Define a yaml file path.',
         help: 'If not present use the "barreler.yaml" file',
-      )
-      ..addFlag(
-        'set-exit-if-changed',
-        defaultsTo: false,
-        negatable: false,
-        help: 'Fail if there are any changes in the generated barrel files.',
       );
   }
 
   final FindSettings settings;
   final Logger logger;
   final FileSystem fs;
+  final KeyPressListener keyPressListener;
 
   @override
-  String get name => 'build';
+  String get name => 'watch';
 
   @override
-  String get description => 'Builds the barrel files.';
+  String get description =>
+      'Builds the barrel files, then watches for changes.';
 
   @override
   Future<int> run([List<String>? args]) async {
     final argResults = args != null ? argParser.parse(args) : this.argResults;
     final providedConfigPath = argResults?['config'] as String?;
 
-    final exitOnChange = argResults?['set-exit-if-changed'] as bool;
-
     final handler = BuildHandler(
       logger: logger,
       fs: fs,
       settings: settings,
       providedConfigPath: providedConfigPath,
-      exitOnChange: exitOnChange,
-      keyPressListener: null,
+      exitOnChange: false,
+      keyPressListener: keyPressListener,
     );
 
-    final result = await handler.run();
+    await handler.run();
 
-    return result;
+    while (true) {
+      final (exit: exit) = await handler.waitForChange();
+
+      if (exit) {
+        break;
+      }
+
+      await handler.run();
+    }
+
+    return 0;
   }
 }

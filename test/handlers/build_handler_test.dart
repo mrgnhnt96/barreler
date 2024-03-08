@@ -1,6 +1,7 @@
 import 'package:barreler/handlers/build_handler.dart';
 import 'package:barreler/src/barrel.dart';
 import 'package:barreler/src/find_settings.dart';
+import 'package:barreler/src/key_press_listener.dart';
 import 'package:barreler/src/settings/default_settings.dart';
 import 'package:barreler/src/settings/directory_settings.dart';
 import 'package:barreler/src/settings/settings.dart';
@@ -13,6 +14,8 @@ import 'package:test/test.dart';
 class _MockLogger extends Mock implements Logger {}
 
 class _MockProgress extends Mock implements Progress {}
+
+class _MockKeyPressListener extends Mock implements KeyPressListener {}
 
 void main() {
   group('$BuildHandler', () {
@@ -47,6 +50,7 @@ void main() {
         handler = BuildHandler(
           logger: mockLogger,
           fs: fs,
+          keyPressListener: _MockKeyPressListener(),
           settings: FindSettings(fs: fs),
           providedConfigPath: null,
           exitOnChange: false,
@@ -162,6 +166,7 @@ void main() {
         final handler = BuildHandler(
           logger: mockLogger,
           fs: fs,
+          keyPressListener: _MockKeyPressListener(),
           settings: FindSettings(fs: fs),
           providedConfigPath: null,
           exitOnChange: false,
@@ -181,6 +186,7 @@ void main() {
         final handler = BuildHandler(
           logger: mockLogger,
           fs: fs,
+          keyPressListener: _MockKeyPressListener(),
           settings: FindSettings(fs: fs),
           providedConfigPath: null,
           exitOnChange: false,
@@ -200,6 +206,7 @@ void main() {
         final handler = BuildHandler(
           logger: mockLogger,
           fs: fs,
+          keyPressListener: _MockKeyPressListener(),
           settings: FindSettings(fs: fs),
           providedConfigPath: 'other.yaml',
           exitOnChange: false,
@@ -224,6 +231,7 @@ void main() {
         final handler = BuildHandler(
           logger: mockLogger,
           fs: fs,
+          keyPressListener: _MockKeyPressListener(),
           settings: FindSettings(fs: fs),
           providedConfigPath: 'other.yaml',
           exitOnChange: false,
@@ -248,6 +256,7 @@ void main() {
         final handler = BuildHandler(
           logger: mockLogger,
           fs: fs,
+          keyPressListener: _MockKeyPressListener(),
           settings: FindSettings(fs: fs),
           providedConfigPath: null,
           exitOnChange: false,
@@ -283,6 +292,7 @@ void main() {
         final handler = BuildHandler(
           logger: mockLogger,
           fs: fs,
+          keyPressListener: _MockKeyPressListener(),
           settings: FindSettings(fs: fs),
           providedConfigPath: null,
           exitOnChange: false,
@@ -320,6 +330,7 @@ void main() {
         final handler = BuildHandler(
           logger: mockLogger,
           fs: fs,
+          keyPressListener: _MockKeyPressListener(),
           settings: FindSettings(fs: fs),
           providedConfigPath: null,
           exitOnChange: true,
@@ -360,6 +371,7 @@ void main() {
         final handler = BuildHandler(
           logger: mockLogger,
           fs: fs,
+          keyPressListener: _MockKeyPressListener(),
           settings: FindSettings(fs: fs),
           providedConfigPath: null,
           exitOnChange: true,

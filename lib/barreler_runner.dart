@@ -2,7 +2,9 @@ import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:barreler/commands/build_command.dart';
 import 'package:barreler/commands/example_command.dart';
+import 'package:barreler/commands/watch_command.dart';
 import 'package:barreler/src/find_settings.dart';
+import 'package:barreler/src/key_press_listener.dart';
 import 'package:barreler/src/version.dart';
 import 'package:file/file.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -11,6 +13,7 @@ class BarrelerRunner extends CommandRunner<int> {
   BarrelerRunner({
     required this.logger,
     required FileSystem fs,
+    required KeyPressListener keyPressListener,
   }) : super(
           'barreler',
           'A Dart package to generate barrel files for your directories.',
@@ -22,6 +25,16 @@ class BarrelerRunner extends CommandRunner<int> {
         settings: FindSettings(
           fs: fs,
         ),
+      ),
+    );
+    addCommand(
+      WatchCommand(
+        fs: fs,
+        logger: logger,
+        settings: FindSettings(
+          fs: fs,
+        ),
+        keyPressListener: keyPressListener,
       ),
     );
 
