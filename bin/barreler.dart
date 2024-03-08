@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:barreler/barreler_runner.dart';
+import 'package:barreler/src/find_settings.dart';
 import 'package:barreler/src/key_press_listener.dart';
 import 'package:file/local.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -36,6 +37,7 @@ Future<int> run(List<String> rawArgs) async {
     fs: fs,
     keyPressListener: KeyPressListener(logger: logger),
     pubUpdater: PubUpdater(),
+    findSettings: FindSettings(fs: fs),
   ).run(args);
 
   logger.flush();

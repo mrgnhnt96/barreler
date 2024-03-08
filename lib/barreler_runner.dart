@@ -18,6 +18,7 @@ class BarrelerRunner extends CommandRunner<int> {
     required FileSystem fs,
     required KeyPressListener keyPressListener,
     required PubUpdater pubUpdater,
+    required FindSettings findSettings,
   }) : super(
           'barreler',
           'A Dart package to generate barrel files for your directories.',
@@ -26,18 +27,14 @@ class BarrelerRunner extends CommandRunner<int> {
       BuildCommand(
         fs: fs,
         logger: logger,
-        settings: FindSettings(
-          fs: fs,
-        ),
+        settings: findSettings,
       ),
     );
     addCommand(
       WatchCommand(
         fs: fs,
         logger: logger,
-        settings: FindSettings(
-          fs: fs,
-        ),
+        settings: findSettings,
         keyPressListener: keyPressListener,
       ),
     );
