@@ -5,6 +5,7 @@ import 'package:barreler/src/extensions/string_extension.dart';
 import 'package:barreler/src/find_settings.dart';
 import 'package:barreler/src/key_press_listener.dart';
 import 'package:barreler/src/settings/settings.dart';
+import 'package:barreler/src/stream_group.dart';
 import 'package:checked_yaml/checked_yaml.dart';
 import 'package:file/file.dart';
 import 'package:glob/glob.dart';
@@ -272,33 +273,5 @@ ${yellow.wrap('Changes detected')}
     logger.success('Barrel files created');
 
     return 0;
-  }
-}
-
-class StreamGroup<T> {
-  StreamGroup(this.streams);
-
-  final List<Stream<T>> streams;
-
-  Stream<void> merge() {
-    final controller = StreamController<void>.broadcast();
-
-    final subscriptions = <StreamSubscription<void>>[];
-
-    for (final stream in streams) {
-      final subscription = stream.listen((event) {
-        controller.add(event);
-      });
-
-      subscriptions.add(subscription);
-    }
-
-    controller.onCancel = () {
-      for (final subscription in subscriptions) {
-        subscription.cancel();
-      }
-    };
-
-    return controller.stream;
   }
 }
