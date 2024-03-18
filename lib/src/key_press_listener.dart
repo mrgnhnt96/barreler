@@ -24,7 +24,7 @@ class KeyPressListener {
   /// we only need one stream for stdin
   static Stream<List<int>>? _stream;
 
-  /// listens to keystrokes and handles them with the [keyPresses] map.
+  /// listens to keystrokes
   Stream<void>? listenToKeystrokes({
     required Event onExit,
     required Event onRebuild,
