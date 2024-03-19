@@ -17,4 +17,5 @@ export 'src/settings/default_settings.dart';
 export 'src/settings/directory_settings.dart';
 export 'src/settings/export_settings.dart';
 export 'src/settings/settings.dart';
+export 'src/stream_group.dart';
 export 'src/version.dart';

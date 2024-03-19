@@ -1,3 +1,9 @@
+# 1.1.2 | 3.18.2024
+
+## Enhancements
+
+- Improve finding & filtering files
+
 # 1.1.0 | 3.8.2024
 
 ## Features
