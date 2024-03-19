@@ -161,6 +161,30 @@ void main() {
         expect(files, hasLength(2));
       });
 
+      test('filters files in nested dir without initial glob pattern', () {
+        final dirSettings = DirectorySettings(
+          dirPath: 'packages/domain/lib',
+          include: [
+            ExportSettings(export: 'src/**.dart'),
+            ExportSettings(export: 'repo/**.dart'),
+          ],
+        );
+
+        final barrel = Barrel(
+          baseSettings: Settings(dirs: [dirSettings]),
+          dirSettings: dirSettings,
+          fs: fs,
+          logger: mockLogger,
+        );
+
+        final files = barrel.filterFiles([
+          'packages/domain/lib/src/gen/foo.dart',
+          'packages/domain/lib/repo/gen/bar.dart',
+        ]).toList();
+
+        expect(files, hasLength(2));
+      });
+
       group('excludes file when', () {
         test('base settings has matching pattern', () {
           final dirSettings = DirectorySettings(

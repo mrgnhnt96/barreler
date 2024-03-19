@@ -6,6 +6,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file/file.dart';
 import 'package:glob/glob.dart';
+import 'package:path/path.dart' as path;
 import 'package:mason_logger/mason_logger.dart';
 
 part 'barrel.g.dart';
@@ -72,7 +73,22 @@ class Barrel extends Equatable {
 
     for (final file in files) {
       final isIncluded = include.isEmpty ||
-          include.any((f) => Glob(f).matches(file) || file.endsWith(f));
+          include.any((f) {
+            if (Glob(f).matches(file)) {
+              return true;
+            }
+
+            if (file.endsWith(f)) {
+              return true;
+            }
+            if (f.contains(path.separator) && !f.startsWith('*')) {
+              if (Glob(path.join(dirSettings.dirPath, f)).matches(file)) {
+                return true;
+              }
+            }
+
+            return false;
+          });
       if (!isIncluded) {
         continue;
       }
