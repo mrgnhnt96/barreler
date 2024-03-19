@@ -169,7 +169,13 @@ class Barrel extends Equatable {
       ..sort();
 
     final internalFiles = findFiles();
+    logger.detail('Found ${internalFiles.length} files');
+
     final internalFilteredFiles = filterFiles(internalFiles);
+
+    logger.detail(
+        'Exporting ${internalFilteredFiles.length} files (after filtering)');
+
     final internalExports = exports(internalFilteredFiles).toList()..sort();
 
     final generated = this.content(
