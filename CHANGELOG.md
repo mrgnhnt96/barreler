@@ -1,3 +1,10 @@
+# 1.1.3 | 3.18.2024
+
+## Fixes
+
+- Tighten min dependency constraints for `args`
+- Fix implementation issue for `ArgResults`
+
 # 1.1.2 | 3.18.2024
 
 ## Enhancements

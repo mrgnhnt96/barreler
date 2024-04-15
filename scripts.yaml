@@ -44,6 +44,7 @@ create-example:
 
 prep:
   (command):
+    - (+) {$prep:pubspec}
     - sip pub get --recursive --quiet
     - "{$format} --set-exit-if-changed"
     - "{$analyze} --fatal-infos --fatal-warnings"
@@ -51,7 +52,6 @@ prep:
     - "{$create-example}"
     - "{$install}"
     - "{$barrel:_only}"
-    - (+) {$prep:pubspec}
     - sip pub get -r
   _build:
     - '{$build_runner:clean}'
