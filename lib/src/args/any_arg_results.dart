@@ -40,4 +40,13 @@ class AnyArgResults implements ArgResults {
 
   @override
   bool wasParsed(String name) => _argResults.wasParsed(name);
+
+  @override
+  bool flag(String name) => _argResults.flag(name);
+
+  @override
+  List<String> multiOption(String name) => _argResults.multiOption(name);
+
+  @override
+  String? option(String name) => _argResults.option(name);
 }

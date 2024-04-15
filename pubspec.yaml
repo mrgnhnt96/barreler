@@ -12,7 +12,7 @@ environment:
   sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
-  args: ">=2.0.0 <3.0.0"
+  args: ">=2.5.0 <3.0.0"
   autoequal: ">=0.0.1 <1.0.0"
   checked_yaml: ">=2.0.0 <3.0.0"
   dart_style: ">=2.0.0 <3.0.0"
