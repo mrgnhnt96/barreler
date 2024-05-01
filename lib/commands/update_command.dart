@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:args/command_runner.dart';
+import 'package:barreler/src/version.dart';
 import 'package:mason_logger/mason_logger.dart' hide ExitCode;
 import 'package:pub_updater/pub_updater.dart';
-import 'package:barreler/src/version.dart';
 
 class UpdateCommand extends Command<int> {
   UpdateCommand({
@@ -18,7 +18,7 @@ class UpdateCommand extends Command<int> {
   String get name => 'update';
 
   @override
-  String get description => 'Update Sip CLI to the latest version';
+  String get description => 'Update Barreler to the latest version';
 
   Future<(bool, String)> needsUpdate() async {
     final latestVersion = await pubUpdater.getLatestVersion('barreler');
