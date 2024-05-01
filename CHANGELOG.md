@@ -1,3 +1,9 @@
+# 1.1.4 | 5.1.2024
+
+## Fixes
+
+- Copy for barreler update command
+
 # 1.1.3 | 3.18.2024
 
 ## Fixes
