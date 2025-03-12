@@ -19,6 +19,7 @@ class AnyArgParser implements ArgParser {
     String? help,
     bool? defaultsTo = false,
     bool negatable = true,
+    bool hideNegatedUsage = true,
     // ignore: avoid_positional_boolean_parameters
     void Function(bool p1)? callback,
     bool hide = false,
@@ -30,6 +31,7 @@ class AnyArgParser implements ArgParser {
         help: help,
         defaultsTo: defaultsTo,
         negatable: negatable,
+        hideNegatedUsage: hideNegatedUsage,
         callback: callback,
         hide: hide,
         aliases: aliases,
