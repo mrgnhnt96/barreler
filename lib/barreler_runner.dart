@@ -4,7 +4,6 @@ import 'package:barreler/commands/build_command.dart';
 import 'package:barreler/commands/example_command.dart';
 import 'package:barreler/commands/update_command.dart';
 import 'package:barreler/commands/watch_command.dart';
-import 'package:barreler/src/args/any_arg_parser.dart';
 import 'package:barreler/src/find_settings.dart';
 import 'package:barreler/src/key_press_listener.dart';
 import 'package:barreler/src/version.dart';
@@ -84,22 +83,16 @@ class BarrelerRunner extends CommandRunner<int> {
   @override
   Future<int> run(Iterable<String> args) async {
     int exitCode;
+    ArgResults? argResults;
     try {
-      final argResults = parse(args);
+      argResults = parse(args);
 
       exitCode = await runCommand(argResults);
     } catch (error) {
       logger.err('$error');
       exitCode = 1;
     } finally {
-      final anyResult = (AnyArgParser()
-            ..addFlag(
-              'version-check',
-              defaultsTo: true,
-            ))
-          .parse(args);
-
-      if (anyResult['version-check'] as bool) {
+      if (argResults?['version-check'] case true) {
         logger.detail('Checking for updates');
         await checkForUpdate();
       } else {

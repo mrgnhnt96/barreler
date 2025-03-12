@@ -6,8 +6,8 @@ import 'package:dart_style/dart_style.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file/file.dart';
 import 'package:glob/glob.dart';
-import 'package:path/path.dart' as path;
 import 'package:mason_logger/mason_logger.dart';
+import 'package:path/path.dart' as path;
 
 part 'barrel.g.dart';
 
@@ -156,6 +156,7 @@ class Barrel extends Equatable {
   /// Create a settings file content
   Future<({bool contentMatches})?> create({required bool allowChange}) async {
     final formatter = DartFormatter(
+      languageVersion: DartFormatter.latestLanguageVersion,
       lineEnding: baseSettings.lineBreak,
       pageWidth: baseSettings.lineLength,
     );
