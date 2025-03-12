@@ -12,29 +12,29 @@ environment:
   sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
-  args: ">=2.7.0 <3.0.0"
-  autoequal: ">=0.0.1 <1.0.0"
-  checked_yaml: ">=2.0.0 <3.0.0"
-  dart_style: ">=2.0.0 <3.0.0"
-  equatable: ">=2.0.0 <3.0.0"
-  file: ">=6.1.4 <8.0.0"
-  glob: ">=2.0.0 <3.0.0"
-  json2yaml: ">=3.0.0 <4.0.0"
-  json_annotation: ">=4.0.0 <5.0.0"
-  mason_logger: ">=0.0.1 <1.0.0"
-  path: ">=1.0.0 <2.0.0"
-  pub_updater: ^0.4.0
-  yaml: ">=3.0.0 <4.0.0"
+  args: ^2.7.0
+  autoequal: ^0.9.1
+  checked_yaml: ^2.0.3
+  dart_style: ^3.0.1
+  equatable: ^2.0.7
+  file: ^7.0.1
+  glob: ^2.1.3
+  json2yaml: ^3.0.1
+  json_annotation: ^4.9.0
+  mason_logger: ^0.3.2
+  path: ^1.9.1
+  pub_updater: ^0.5.0
+  yaml: ^3.1.3
 
 dev_dependencies:
-  autoequal_gen: ^0.9.1
-  build_runner: ^2.3.3
+  autoequal_gen: ^0.9.5
+  build_runner: ^2.4.15
   build_version: ^2.1.1
-  json_serializable: ^6.7.1
-  mocktail: ^1.0.3
-  pana: ^0.22.2
-  test: ^1.21.6
-  very_good_analysis: ^5.1.0
+  json_serializable: ^6.9.4
+  mocktail: ^1.0.4
+  pana: ^0.22.19
+  test: ^1.25.15
+  very_good_analysis: ^7.0.0
 
 executables:
   barreler:
