@@ -50,7 +50,8 @@ Settings _$SettingsFromJson(Map json) => $checkedCreate(
                   const []),
           lineBreak:
               $checkedConvert('line_break', (v) => v as String? ?? '\u{000A}'),
-          lineLength: $checkedConvert('line_length', (v) => v as int? ?? 80),
+          lineLength:
+              $checkedConvert('line_length', (v) => (v as num?)?.toInt() ?? 80),
         );
         return val;
       },

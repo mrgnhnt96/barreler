@@ -7,11 +7,7 @@ part of 'default_settings.dart';
 // **************************************************************************
 
 extension _$DefaultSettingsAutoequal on DefaultSettings {
-  List<Object?> get _$props => [
-        fileName,
-        comments,
-        disclaimer,
-      ];
+  List<Object?> get _$props => [fileName, comments, disclaimer];
 }
 
 // **************************************************************************

@@ -7,11 +7,7 @@ part of 'export_settings.dart';
 // **************************************************************************
 
 extension _$ExportSettingsAutoequal on ExportSettings {
-  List<Object?> get _$props => [
-        export,
-        show,
-        hide,
-      ];
+  List<Object?> get _$props => [export, show, hide];
 }
 
 // **************************************************************************
