@@ -1,3 +1,10 @@
+# 1.2.0 | 3.12.2025
+
+## Enhancements
+
+- Bump `args` dependency to `^2.7.0`
+- Add `hideNegatedUsage` flag to `AnyArgParser`
+
 # 1.1.4 | 5.1.2024
 
 ## Fixes
