@@ -1,3 +1,9 @@
+# 1.2.1 | 1.16.2026
+
+## Chore
+
+- Update README
+
 # 1.2.0 | 3.12.2025
 
 ## Enhancements
