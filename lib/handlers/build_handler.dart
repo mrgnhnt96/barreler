@@ -33,8 +33,9 @@ class BuildHandler {
     final barrels = <Barrel>[];
 
     for (final dir in settings.dirs) {
-      final matches =
-          await Glob(dir.dirPath).listFileSystemSync(fs, followLinks: false);
+      final matches = await Glob(
+        dir.dirPath,
+      ).listFileSystemSync(fs, followLinks: false);
 
       if (matches.length == 1) {
         barrels.add(Barrel.from(settings, dir, fs, logger));
@@ -45,16 +46,19 @@ class BuildHandler {
         if (entity is! Directory) {
           continue;
         }
-        final updated =
-            dir.changePath(entity.path.relativeTo(fs.currentDirectory.path));
+        final updated = dir.changePath(
+          entity.path.relativeTo(fs.currentDirectory.path),
+        );
 
         barrels.add(Barrel.from(settings, updated, fs, logger));
       }
     }
 
     // longest path first, incase nested directories barrel files are to be exported later
-    barrels.sort((a, b) =>
-        b.dirSettings.dirPath.length.compareTo(a.dirSettings.dirPath.length));
+    barrels.sort(
+      (a, b) =>
+          b.dirSettings.dirPath.length.compareTo(a.dirSettings.dirPath.length),
+    );
 
     return barrels;
   }
@@ -97,9 +101,7 @@ class BuildHandler {
       final path = barrel.dirSettings.dirPath;
       final name = basename(barrel.barrelFile);
       final barrelString = '${blue.wrap(name)} ${darkGray.wrap('— in $path')}';
-      final done = logger.progress(
-        'Creating $barrelString',
-      );
+      final done = logger.progress('Creating $barrelString');
 
       try {
         final result = await barrel.create(allowChange: !exitOnChange);
@@ -150,7 +152,7 @@ class BuildHandler {
     final events = {
       FileSystemEvent.delete,
       FileSystemEvent.create,
-      FileSystemEvent.move
+      FileSystemEvent.move,
     };
 
     String eventType(int event) {
@@ -180,8 +182,9 @@ class BuildHandler {
         },
       );
 
-      final watcher =
-          fs.directory(dir).watch(recursive: true, events: FileSystemEvent.all);
+      final watcher = fs
+          .directory(dir)
+          .watch(recursive: true, events: FileSystemEvent.all);
 
       subscription = watcher.listen((event) {
         logger.detail('\n');
@@ -202,7 +205,8 @@ class BuildHandler {
     }).toList();
 
     void writeWaitingMessage() {
-      final waitingMessage = '''
+      final waitingMessage =
+          '''
 ${yellow.wrap('Waiting for changes...')}
 ${darkGray.wrap('Press `Ctrl+C` or `q` to exit')}
 ${darkGray.wrap('Press `r` to rebuild')}
@@ -226,9 +230,9 @@ ${darkGray.wrap('Press `r` to rebuild')}
     StreamSubscription<void>? inputSubscription;
     inputSubscription = input?.listen((_) {});
 
-    final fileChangeListener = StreamGroup(fileModifications)
-        .merge()
-        .listen((_) => fileChangeCompleter.complete());
+    final fileChangeListener = StreamGroup(
+      fileModifications,
+    ).merge().listen((_) => fileChangeCompleter.complete());
 
     writeWaitingMessage();
 
@@ -242,7 +246,8 @@ ${darkGray.wrap('Press `r` to rebuild')}
       return (exit: true);
     }
 
-    final changeMessage = '''
+    final changeMessage =
+        '''
 ${yellow.wrap('Changes detected')}
 ''';
 

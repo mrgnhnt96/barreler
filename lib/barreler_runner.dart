@@ -19,16 +19,10 @@ class BarrelerRunner extends CommandRunner<int> {
     required PubUpdater pubUpdater,
     required FindSettings findSettings,
   }) : super(
-          'barreler',
-          'A Dart package to generate barrel files for your directories.',
-        ) {
-    addCommand(
-      BuildCommand(
-        fs: fs,
-        logger: logger,
-        settings: findSettings,
-      ),
-    );
+         'barreler',
+         'A Dart package to generate barrel files for your directories.',
+       ) {
+    addCommand(BuildCommand(fs: fs, logger: logger, settings: findSettings));
     addCommand(
       WatchCommand(
         fs: fs,
@@ -38,18 +32,10 @@ class BarrelerRunner extends CommandRunner<int> {
       ),
     );
     addCommand(
-      updateCommand = UpdateCommand(
-        logger: logger,
-        pubUpdater: pubUpdater,
-      ),
+      updateCommand = UpdateCommand(logger: logger, pubUpdater: pubUpdater),
     );
 
-    addCommand(
-      ExampleCommand(
-        fileSystem: fs,
-        logger: logger,
-      ),
-    );
+    addCommand(ExampleCommand(fileSystem: fs, logger: logger));
 
     argParser
       ..addFlag(
@@ -116,7 +102,8 @@ class BarrelerRunner extends CommandRunner<int> {
       final updateCommand = yellow.wrap('barreler update');
       final changelogLink = darkGray.wrap(changelog);
 
-      final message = '''
+      final message =
+          '''
   ┌─────────────────────────────────────────────────────────────────────────┐ 
   │ New update for $package is available!                                   │ 
   │ You are using $currentVersion, the latest is $updateToVersion.                               │ 

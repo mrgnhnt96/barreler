@@ -21,8 +21,9 @@ void main() {
       fs = MemoryFileSystem();
       mockLogger = _MockLogger();
 
-      when(() => mockLogger.progress(any(), options: any(named: 'options')))
-          .thenAnswer((_) => _MockProgress());
+      when(
+        () => mockLogger.progress(any(), options: any(named: 'options')),
+      ).thenAnswer((_) => _MockProgress());
     });
 
     void createStructure({
@@ -42,11 +43,7 @@ void main() {
       test('find files without barrel file', () {
         createStructure(
           dirs: ['lib/src'],
-          files: [
-            'lib/src/foo.dart',
-            'lib/src/bar.dart',
-            'lib/src/index.dart',
-          ],
+          files: ['lib/src/foo.dart', 'lib/src/bar.dart', 'lib/src/index.dart'],
         );
 
         final dirSettings = DirectorySettings(
@@ -70,9 +67,7 @@ void main() {
       test('ignores directories', () {
         createStructure(
           dirs: ['lib/src', 'lib/src/foo'],
-          files: [
-            'lib/src/bar.dart',
-          ],
+          files: ['lib/src/bar.dart'],
         );
 
         final dirSettings = DirectorySettings(dirPath: 'lib/src');
@@ -93,10 +88,7 @@ void main() {
       test('ignores non-dart files', () {
         createStructure(
           dirs: ['lib/src'],
-          files: [
-            'lib/src/bar.ts',
-            'lib/src/baz.dart',
-          ],
+          files: ['lib/src/bar.ts', 'lib/src/baz.dart'],
         );
 
         final dirSettings = DirectorySettings(dirPath: 'lib/src');
@@ -139,10 +131,7 @@ void main() {
           dirPath: 'packages/application/lib',
           include: [
             ExportSettings(export: '**_bloc.dart'),
-            ExportSettings(
-              export: 'setup/setup.dart',
-              show: ['setup'],
-            ),
+            ExportSettings(export: 'setup/setup.dart', show: ['setup']),
           ],
         );
 
@@ -187,9 +176,7 @@ void main() {
 
       group('excludes file when', () {
         test('base settings has matching pattern', () {
-          final dirSettings = DirectorySettings(
-            dirPath: 'lib/src',
-          );
+          final dirSettings = DirectorySettings(dirPath: 'lib/src');
 
           final barrel = Barrel(
             baseSettings: Settings(
@@ -235,9 +222,7 @@ void main() {
 
       group('includes file when', () {
         test('base settings has matching pattern', () {
-          final dirSettings = DirectorySettings(
-            dirPath: 'lib/src',
-          );
+          final dirSettings = DirectorySettings(dirPath: 'lib/src');
 
           final barrel = Barrel(
             baseSettings: Settings(
@@ -261,9 +246,7 @@ void main() {
         test('dir settings has matching pattern', () {
           final dirSettings = DirectorySettings(
             dirPath: 'lib/src',
-            include: [
-              ExportSettings(export: '**/foo.dart'),
-            ],
+            include: [ExportSettings(export: '**/foo.dart')],
           );
 
           final barrel = Barrel(
@@ -286,9 +269,7 @@ void main() {
 
     group('#exports', () {
       test('create general export', () {
-        final dirSettings = DirectorySettings(
-          dirPath: 'lib/src',
-        );
+        final dirSettings = DirectorySettings(dirPath: 'lib/src');
 
         final barrel = Barrel(
           baseSettings: Settings(dirs: [dirSettings]),
@@ -297,9 +278,7 @@ void main() {
           logger: mockLogger,
         );
 
-        final exports = barrel.exports([
-          'lib/src/foo.dart',
-        ]);
+        final exports = barrel.exports(['lib/src/foo.dart']);
 
         expect(exports, hasLength(1));
         expect(exports, ["export 'foo.dart';"]);
@@ -310,10 +289,7 @@ void main() {
           final dirSettings = DirectorySettings(
             dirPath: 'lib/src',
             include: [
-              ExportSettings(
-                export: 'foo.dart',
-                show: ['Foo'],
-              ),
+              ExportSettings(export: 'foo.dart', show: ['Foo']),
             ],
           );
 
@@ -324,9 +300,7 @@ void main() {
             logger: mockLogger,
           );
 
-          final exports = barrel.exports([
-            'lib/src/foo.dart',
-          ]).toList();
+          final exports = barrel.exports(['lib/src/foo.dart']).toList();
 
           expect(exports, hasLength(1));
           expect(exports, ["export 'foo.dart' show Foo;"]);
@@ -336,10 +310,7 @@ void main() {
           final dirSettings = DirectorySettings(
             dirPath: 'lib/src',
             include: [
-              ExportSettings(
-                export: 'lib/src/foo.dart',
-                show: ['Foo'],
-              ),
+              ExportSettings(export: 'lib/src/foo.dart', show: ['Foo']),
             ],
           );
 
@@ -350,9 +321,7 @@ void main() {
             logger: mockLogger,
           );
 
-          final exports = barrel.exports([
-            'lib/src/foo.dart',
-          ]).toList();
+          final exports = barrel.exports(['lib/src/foo.dart']).toList();
 
           expect(exports, hasLength(1));
           expect(exports, ["export 'foo.dart' show Foo;"]);
@@ -364,10 +333,7 @@ void main() {
           final dirSettings = DirectorySettings(
             dirPath: 'lib/src',
             include: [
-              ExportSettings(
-                export: 'foo.dart',
-                hide: ['Foo'],
-              ),
+              ExportSettings(export: 'foo.dart', hide: ['Foo']),
             ],
           );
 
@@ -378,9 +344,7 @@ void main() {
             logger: mockLogger,
           );
 
-          final exports = barrel.exports([
-            'lib/src/foo.dart',
-          ]).toList();
+          final exports = barrel.exports(['lib/src/foo.dart']).toList();
 
           expect(exports, hasLength(1));
           expect(exports, ["export 'foo.dart' hide Foo;"]);
@@ -390,10 +354,7 @@ void main() {
           final dirSettings = DirectorySettings(
             dirPath: 'lib/src',
             include: [
-              ExportSettings(
-                export: 'lib/src/foo.dart',
-                hide: ['Foo'],
-              ),
+              ExportSettings(export: 'lib/src/foo.dart', hide: ['Foo']),
             ],
           );
 
@@ -404,9 +365,7 @@ void main() {
             logger: mockLogger,
           );
 
-          final exports = barrel.exports([
-            'lib/src/foo.dart',
-          ]).toList();
+          final exports = barrel.exports(['lib/src/foo.dart']).toList();
 
           expect(exports, hasLength(1));
           expect(exports, ["export 'foo.dart' hide Foo;"]);
@@ -416,9 +375,7 @@ void main() {
 
     group('#content', () {
       test('create barrel content', () {
-        final dirSettings = DirectorySettings(
-          dirPath: 'lib/src',
-        );
+        final dirSettings = DirectorySettings(dirPath: 'lib/src');
 
         final barrel = Barrel(
           baseSettings: Settings(dirs: [dirSettings]),
@@ -432,12 +389,14 @@ void main() {
         final externalExports = "export 'foo.dart';";
         final internalExports = "export 'bar.dart';";
 
-        final content = barrel.content(
-          disclaimer: [disclaimer],
-          comments: [comments],
-          externalExports: [externalExports],
-          internalExports: [internalExports],
-        )?.join('\n');
+        final content = barrel
+            .content(
+              disclaimer: [disclaimer],
+              comments: [comments],
+              externalExports: [externalExports],
+              internalExports: [internalExports],
+            )
+            ?.join('\n');
 
         expect(content, isNotNull);
 
@@ -452,9 +411,7 @@ void main() {
       });
 
       test('returns null if no exports are provided', () {
-        final dirSettings = DirectorySettings(
-          dirPath: 'lib/src',
-        );
+        final dirSettings = DirectorySettings(dirPath: 'lib/src');
 
         final barrel = Barrel(
           baseSettings: Settings(dirs: [dirSettings]),
@@ -478,10 +435,7 @@ void main() {
       test('successfully creates file', () async {
         createStructure(
           dirs: ['lib/src'],
-          files: [
-            'lib/src/foo.dart',
-            'lib/src/bar.dart',
-          ],
+          files: ['lib/src/foo.dart', 'lib/src/bar.dart'],
         );
 
         final dirSettings = DirectorySettings(
@@ -507,15 +461,10 @@ void main() {
       test('does not modify file when allow change is false', () async {
         createStructure(
           dirs: ['lib/src'],
-          files: [
-            'lib/src/foo.dart',
-            'lib/src/bar.dart',
-          ],
+          files: ['lib/src/foo.dart', 'lib/src/bar.dart'],
         );
 
-        final dirSettings = DirectorySettings(
-          dirPath: 'lib/src',
-        );
+        final dirSettings = DirectorySettings(dirPath: 'lib/src');
 
         final barrel = Barrel(
           baseSettings: Settings(dirs: [dirSettings]),

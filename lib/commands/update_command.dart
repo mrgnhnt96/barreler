@@ -6,10 +6,7 @@ import 'package:mason_logger/mason_logger.dart' hide ExitCode;
 import 'package:pub_updater/pub_updater.dart';
 
 class UpdateCommand extends Command<int> {
-  UpdateCommand({
-    required this.pubUpdater,
-    required this.logger,
-  });
+  UpdateCommand({required this.pubUpdater, required this.logger});
 
   final PubUpdater pubUpdater;
   final Logger logger;
@@ -39,12 +36,10 @@ class UpdateCommand extends Command<int> {
   /// Returns true if the local version is larger than the latest version
   ///
   /// 0.0.1 (local) > 0.0.0 (latest)
-  bool isLocalVersion({
-    required String current,
-    required String latest,
-  }) {
-    final latestPlus =
-        latest.contains('+') ? latest.replaceAll(RegExp(r'.*(?=\+)'), '') : '';
+  bool isLocalVersion({required String current, required String latest}) {
+    final latestPlus = latest.contains('+')
+        ? latest.replaceAll(RegExp(r'.*(?=\+)'), '')
+        : '';
     final currentPlus = current.contains('+')
         ? current.replaceAll(RegExp(r'.*(?=\+)'), '')
         : '';

@@ -3,9 +3,9 @@
 part of 'barrel.dart';
 
 // **************************************************************************
-// AutoequalGenerator
+// EquatableGenerator
 // **************************************************************************
 
-extension _$BarrelAutoequal on Barrel {
+extension _$BarrelEquatableAnnotations on Barrel {
   List<Object?> get _$props => [baseSettings, dirSettings];
 }

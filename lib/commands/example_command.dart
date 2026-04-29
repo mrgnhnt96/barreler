@@ -8,10 +8,7 @@ import 'package:json2yaml/json2yaml.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 class ExampleCommand extends Command<int> {
-  ExampleCommand({
-    required this.fileSystem,
-    required this.logger,
-  });
+  ExampleCommand({required this.fileSystem, required this.logger});
 
   final FileSystem fileSystem;
   final Logger logger;
@@ -41,10 +38,7 @@ class ExampleCommand extends Command<int> {
             ),
           ],
           include: [
-            ExportSettings(
-              export: 'src/letters.dart',
-              hide: ['A', 'B', 'C'],
-            ),
+            ExportSettings(export: 'src/letters.dart', hide: ['A', 'B', 'C']),
           ],
           exclude: ['src/numbers.dart'],
         ),

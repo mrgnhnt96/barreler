@@ -12,13 +12,12 @@ class WatchCommand extends Command<int> {
     required this.logger,
     required this.keyPressListener,
   }) {
-    argParser
-      ..addOption(
-        'config',
-        abbr: 'c',
-        valueHelp: 'Define a yaml file path.',
-        help: 'If not present use the "barreler.yaml" file',
-      );
+    argParser..addOption(
+      'config',
+      abbr: 'c',
+      valueHelp: 'Define a yaml file path.',
+      help: 'If not present use the "barreler.yaml" file',
+    );
   }
 
   final FindSettings settings;

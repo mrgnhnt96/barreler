@@ -1,4 +1,4 @@
-import 'package:autoequal/autoequal.dart';
+import 'package:equatable_annotations/equatable_annotations.dart';
 import 'package:barreler/src/extensions/string_extension.dart';
 import 'package:barreler/src/settings/directory_settings.dart';
 import 'package:barreler/src/settings/settings.dart';
@@ -64,7 +64,7 @@ class Barrel extends Equatable {
   Iterable<String> filterFiles(Iterable<String> files) sync* {
     final include = [
       ...baseSettings.include,
-      ...dirSettings.include.map((e) => e.export)
+      ...dirSettings.include.map((e) => e.export),
     ];
     final exclude = [...baseSettings.exclude, ...dirSettings.exclude];
 
@@ -72,7 +72,8 @@ class Barrel extends Equatable {
     logger.detail('Exclude: $exclude');
 
     for (final file in files) {
-      final isIncluded = include.isEmpty ||
+      final isIncluded =
+          include.isEmpty ||
           include.any((f) {
             if (Glob(f).matches(file)) {
               return true;
@@ -93,8 +94,9 @@ class Barrel extends Equatable {
         continue;
       }
 
-      final isExcluded =
-          exclude.any((f) => Glob(f).matches(file) || file.endsWith(f));
+      final isExcluded = exclude.any(
+        (f) => Glob(f).matches(file) || file.endsWith(f),
+      );
       if (isExcluded) {
         continue;
       }
@@ -134,20 +136,12 @@ class Barrel extends Equatable {
 
     return [
       if (dirSettings.disclaimer && disclaimer.isNotEmpty) ...[
-        for (final line in [
-          ...disclaimer,
-          if (comments.isNotEmpty) '',
-        ])
+        for (final line in [...disclaimer, if (comments.isNotEmpty) ''])
           '// $line',
       ],
-      if (comments.isNotEmpty) ...[
-        for (final line in comments) '// $line',
-      ],
+      if (comments.isNotEmpty) ...[for (final line in comments) '// $line'],
       '',
-      if (externalExports.isNotEmpty) ...[
-        ...externalExports,
-        '',
-      ],
+      if (externalExports.isNotEmpty) ...[...externalExports, ''],
       ...internalExports,
       '',
     ];
@@ -175,7 +169,8 @@ class Barrel extends Equatable {
     final internalFilteredFiles = filterFiles(internalFiles);
 
     logger.detail(
-        'Exporting ${internalFilteredFiles.length} files (after filtering)');
+      'Exporting ${internalFilteredFiles.length} files (after filtering)',
+    );
 
     final internalExports = exports(internalFilteredFiles).toList()..sort();
 

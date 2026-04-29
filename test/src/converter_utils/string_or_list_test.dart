@@ -23,22 +23,21 @@ void main() {
 
     test('return list with strings when value is a list', () {
       final result = stringOrList({
-        'foo': ['bar', 'baz']
+        'foo': ['bar', 'baz'],
       }, 'foo');
 
       expect(result, ['bar', 'baz']);
     });
 
-    test('return list with strings when value is a list with empty strings',
-        () {
-      final result = stringOrList(
-        {
-          'foo': ['bar', '', 'baz']
-        },
-        'foo',
-      );
+    test(
+      'return list with strings when value is a list with empty strings',
+      () {
+        final result = stringOrList({
+          'foo': ['bar', '', 'baz'],
+        }, 'foo');
 
-      expect(result, ['bar', 'baz']);
-    });
+        expect(result, ['bar', 'baz']);
+      },
+    );
   });
 }

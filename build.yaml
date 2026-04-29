@@ -1,7 +1,7 @@
 targets:
   $default:
     builders:
-      autoequal_gen:
+      equatable_gen:
         options:
           auto_include: true
 

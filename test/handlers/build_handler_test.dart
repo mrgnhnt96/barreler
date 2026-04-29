@@ -26,8 +26,9 @@ void main() {
       fs = MemoryFileSystem();
       mockLogger = _MockLogger();
 
-      when(() => mockLogger.progress(any(), options: any(named: 'options')))
-          .thenAnswer((_) => _MockProgress());
+      when(
+        () => mockLogger.progress(any(), options: any(named: 'options')),
+      ).thenAnswer((_) => _MockProgress());
     });
 
     void createStructure({
@@ -58,18 +59,14 @@ void main() {
       });
 
       test('return simple generator', () async {
-        createStructure(
-          dirs: ['lib'],
-        );
+        createStructure(dirs: ['lib']);
 
         final dirSettings = DirectorySettings(
           dirPath: 'lib',
           fileName: 'index',
         );
 
-        final settings = Settings(
-          dirs: [dirSettings],
-        );
+        final settings = Settings(dirs: [dirSettings]);
 
         final barrelers = await handler.getBarrels(settings);
 
@@ -87,18 +84,14 @@ void main() {
       });
 
       test('can find matching dirs', () async {
-        createStructure(
-          dirs: ['lib/src', 'lib/models'],
-        );
+        createStructure(dirs: ['lib/src', 'lib/models']);
 
         final dirSettings = DirectorySettings(
           dirPath: 'lib/*',
           fileName: 'index',
         );
 
-        final settings = Settings(
-          dirs: [dirSettings],
-        );
+        final settings = Settings(dirs: [dirSettings]);
 
         final barrelers = await handler.getBarrels(settings);
 
@@ -123,18 +116,14 @@ void main() {
       });
 
       test('sorts dirs by length', () async {
-        createStructure(
-          dirs: ['lib/src/models'],
-        );
+        createStructure(dirs: ['lib/src/models']);
 
         final dirSettings = DirectorySettings(
           dirPath: 'lib/**',
           fileName: 'index',
         );
 
-        final settings = Settings(
-          dirs: [dirSettings],
-        );
+        final settings = Settings(dirs: [dirSettings]);
 
         final barrelers = await handler.getBarrels(settings);
 
@@ -179,9 +168,7 @@ void main() {
       });
 
       test('can read default path', () async {
-        createStructure(
-          files: [FindSettings.defaultPath],
-        );
+        createStructure(files: [FindSettings.defaultPath]);
 
         final handler = BuildHandler(
           logger: mockLogger,
@@ -199,9 +186,7 @@ void main() {
       });
 
       test('can read provided path', () async {
-        createStructure(
-          files: ['other.yaml'],
-        );
+        createStructure(files: ['other.yaml']);
 
         final handler = BuildHandler(
           logger: mockLogger,
@@ -221,10 +206,7 @@ void main() {
       test('changes cwd when cwd is not with config file', () async {
         final beforeCwd = fs.currentDirectory.path;
 
-        createStructure(
-          dirs: ['lib'],
-          files: ['other.yaml'],
-        );
+        createStructure(dirs: ['lib'], files: ['other.yaml']);
 
         fs.currentDirectory = fs.directory('lib');
 
@@ -248,10 +230,7 @@ void main() {
 
     group('#createBarrelFiles', () {
       test('can create barrel files', () async {
-        createStructure(
-          dirs: ['lib/src'],
-          files: ['lib/src/file.dart'],
-        );
+        createStructure(dirs: ['lib/src'], files: ['lib/src/file.dart']);
 
         final handler = BuildHandler(
           logger: mockLogger,
@@ -269,9 +248,7 @@ void main() {
 
         final barrels = [
           Barrel(
-            baseSettings: Settings(
-              dirs: [dirSettings],
-            ),
+            baseSettings: Settings(dirs: [dirSettings]),
             dirSettings: dirSettings,
             fs: fs,
             logger: mockLogger,
@@ -285,9 +262,7 @@ void main() {
       });
 
       test('skips creation when no files are found', () async {
-        createStructure(
-          dirs: ['lib/src'],
-        );
+        createStructure(dirs: ['lib/src']);
 
         final handler = BuildHandler(
           logger: mockLogger,
@@ -305,9 +280,7 @@ void main() {
 
         final barrels = [
           Barrel(
-            baseSettings: Settings(
-              dirs: [dirSettings],
-            ),
+            baseSettings: Settings(dirs: [dirSettings]),
             dirSettings: dirSettings,
             fs: fs,
             logger: mockLogger,
@@ -320,90 +293,86 @@ void main() {
         expect(barrelFile.existsSync(), isFalse);
       });
 
-      test('fails when changes are detected when exitOnChange is true',
-          () async {
-        createStructure(
-          dirs: ['lib/src'],
-          files: ['lib/src/file.dart'],
-        );
+      test(
+        'fails when changes are detected when exitOnChange is true',
+        () async {
+          createStructure(dirs: ['lib/src'], files: ['lib/src/file.dart']);
 
-        final handler = BuildHandler(
-          logger: mockLogger,
-          fs: fs,
-          keyPressListener: _MockKeyPressListener(),
-          settings: FindSettings(fs: fs),
-          providedConfigPath: null,
-          exitOnChange: true,
-        );
+          final handler = BuildHandler(
+            logger: mockLogger,
+            fs: fs,
+            keyPressListener: _MockKeyPressListener(),
+            settings: FindSettings(fs: fs),
+            providedConfigPath: null,
+            exitOnChange: true,
+          );
 
-        final dirSettings = DirectorySettings(
-          dirPath: 'lib/src',
-          fileName: 'index',
-        );
+          final dirSettings = DirectorySettings(
+            dirPath: 'lib/src',
+            fileName: 'index',
+          );
 
-        final barrels = [
-          Barrel(
-            baseSettings: Settings(
-              dirs: [dirSettings],
-              defaultSettings: DefaultSettings(disclaimer: 'blah'),
+          final barrels = [
+            Barrel(
+              baseSettings: Settings(
+                dirs: [dirSettings],
+                defaultSettings: DefaultSettings(disclaimer: 'blah'),
+              ),
+              dirSettings: dirSettings,
+              fs: fs,
+              logger: mockLogger,
             ),
+          ];
+
+          final success = await handler.createBarrelFiles(barrels);
+
+          expect(success, isFalse);
+
+          final barrelFile = fs.file('lib/src/index.dart');
+          expect(barrelFile.existsSync(), isFalse);
+        },
+      );
+
+      test(
+        'succeeds when no changes are detected when exitOnChange is true',
+        () async {
+          createStructure(dirs: ['lib/src'], files: ['lib/src/file.dart']);
+
+          final handler = BuildHandler(
+            logger: mockLogger,
+            fs: fs,
+            keyPressListener: _MockKeyPressListener(),
+            settings: FindSettings(fs: fs),
+            providedConfigPath: null,
+            exitOnChange: true,
+          );
+
+          final dirSettings = DirectorySettings(
+            dirPath: 'lib/src',
+            fileName: 'index',
+          );
+
+          final barrel = Barrel(
+            baseSettings: Settings(dirs: [dirSettings]),
             dirSettings: dirSettings,
             fs: fs,
             logger: mockLogger,
-          ),
-        ];
+          );
 
-        final success = await handler.createBarrelFiles(barrels);
+          final seed = await barrel.create(allowChange: true);
 
-        expect(success, isFalse);
+          expect(seed, isNull); //successfully created
 
-        final barrelFile = fs.file('lib/src/index.dart');
-        expect(barrelFile.existsSync(), isFalse);
-      });
+          final barrels = [barrel];
 
-      test('succeeds when no changes are detected when exitOnChange is true',
-          () async {
-        createStructure(
-          dirs: ['lib/src'],
-          files: ['lib/src/file.dart'],
-        );
+          final success = await handler.createBarrelFiles(barrels);
 
-        final handler = BuildHandler(
-          logger: mockLogger,
-          fs: fs,
-          keyPressListener: _MockKeyPressListener(),
-          settings: FindSettings(fs: fs),
-          providedConfigPath: null,
-          exitOnChange: true,
-        );
+          expect(success, isTrue);
 
-        final dirSettings = DirectorySettings(
-          dirPath: 'lib/src',
-          fileName: 'index',
-        );
-
-        final barrel = Barrel(
-          baseSettings: Settings(
-            dirs: [dirSettings],
-          ),
-          dirSettings: dirSettings,
-          fs: fs,
-          logger: mockLogger,
-        );
-
-        final seed = await barrel.create(allowChange: true);
-
-        expect(seed, isNull); //successfully created
-
-        final barrels = [barrel];
-
-        final success = await handler.createBarrelFiles(barrels);
-
-        expect(success, isTrue);
-
-        final barrelFile = fs.file('lib/src/index.dart');
-        expect(barrelFile.existsSync(), isTrue);
-      });
+          final barrelFile = fs.file('lib/src/index.dart');
+          expect(barrelFile.existsSync(), isTrue);
+        },
+      );
     });
   });
 }

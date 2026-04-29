@@ -2,9 +2,7 @@ import 'package:file/file.dart';
 import 'package:path/path.dart' as p;
 
 class FindSettings {
-  FindSettings({
-    required this.fs,
-  });
+  FindSettings({required this.fs});
 
   static const defaultPath = 'barreler.yaml';
 

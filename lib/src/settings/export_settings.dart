@@ -27,11 +27,7 @@ class ExportSettings extends Equatable {
   final List<String> hide;
 
   ExportSettings updatePath(String file) {
-    return ExportSettings(
-      export: file,
-      show: show,
-      hide: hide,
-    );
+    return ExportSettings(export: file, show: show, hide: hide);
   }
 
   String toCode() {
